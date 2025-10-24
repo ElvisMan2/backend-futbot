@@ -1,0 +1,19 @@
+CREATE DATABASE futbot_db;
+USE futbot_db;
+
+CREATE TABLE usuarios (
+  usuarioId INT AUTO_INCREMENT PRIMARY KEY,
+  nombres VARCHAR(100) NOT NULL,
+  apellido_paterno VARCHAR(100) NOT NULL,
+  apellido_materno VARCHAR(100),
+  correo VARCHAR(150) UNIQUE NOT NULL,
+  contrasena VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE reservas (
+  reserva_id INT AUTO_INCREMENT PRIMARY KEY,
+  usuarioId INT NOT NULL,
+  fecha_reserva DATE NOT NULL,
+  hora_reserva TIME NOT NULL,
+  FOREIGN KEY (usuarioId) REFERENCES usuarios(usuarioId) ON DELETE CASCADE
+);
