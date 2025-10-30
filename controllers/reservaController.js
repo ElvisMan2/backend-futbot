@@ -6,9 +6,15 @@ export const listarReservas = async (req, res) => {
 };
 
 export const crearReserva = async (req, res) => {
-  const nuevaReserva = await reservaService.createReserva(req.body);
-  res.status(201).json(nuevaReserva);
+  try {
+    const nuevaReserva = await reservaService.createReserva(req.body);
+    res.status(201).json(nuevaReserva);
+  } catch (error) {
+    console.error("Error al crear reserva:", error.message);
+    res.status(400).json({ mensaje: error.message });
+  }
 };
+
 
 export const verificarDisponibilidad = async (req, res) => {
   try {

@@ -8,6 +8,12 @@ export const getReservas = async () => {
 
 export const createReserva = async (reserva) => {
   const { usuarioId, fecha_reserva, hora_reserva } = reserva;
+
+  const resultado = await verificarDisponibilidad(fecha_reserva, hora_reserva);
+  if (!resultado.valido) {
+    throw new Error(resultado.mensaje);
+  }
+
   const hora24 = convertTo24Hour(hora_reserva);
 
   const [result] = await pool.query(
@@ -15,8 +21,10 @@ export const createReserva = async (reserva) => {
      VALUES (?, STR_TO_DATE(?, '%d/%m/%Y'), ?)`,
     [usuarioId, fecha_reserva, hora24]
   );
+
   return { id: result.insertId, ...reserva, hora_reserva: hora24 };
 };
+
 
 export const verificarDisponibilidad = async (fechaInput, horaInput) => {
   try {

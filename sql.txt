@@ -17,3 +17,9 @@ CREATE TABLE reservas (
   hora_reserva TIME NOT NULL,
   FOREIGN KEY (usuarioId) REFERENCES usuarios(usuarioId) ON DELETE CASCADE
 );
+
+
+CREATE USER 'futbot'@'localhost' IDENTIFIED BY 'futbot123';
+CREATE DATABASE IF NOT EXISTS futbot_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+GRANT ALL PRIVILEGES ON futbot_db.* TO 'futbot'@'localhost';
+FLUSH PRIVILEGES;
