@@ -7,7 +7,7 @@ export const getUsuarios = async () => {
 };
 
 export const getUsuarioById = async (id) => {
-  const [rows] = await pool.query('SELECT * FROM usuarios WHERE usuarioId = ?', [id]);
+  const [rows] = await pool.query('SELECT nombres, apellido_paterno, correo FROM usuarios WHERE usuarioId = ?', [id]);
   return rows[0];
 };
 

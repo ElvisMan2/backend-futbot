@@ -6,7 +6,8 @@ export const listarUsuarios = async (req, res) => {
 };
 
 export const obtenerUsuario = async (req, res) => {
-  const usuario = await usuarioService.getUsuarioById(req.params.id);
+  const { id } = req.query
+  const usuario = await usuarioService.getUsuarioById(id);
   usuario ? res.json(usuario) : res.status(404).json({ message: 'Usuario no encontrado' });
 };
 
@@ -32,7 +33,7 @@ export const login = async (req, res) => {
     if (!correo || !contrasena) {
       return res.status(400).json({ message: 'Correo y contraseña son requeridos' });
     }
-
+    console.log("Intentando login con:", correo, contrasena);
     const usuario = await usuarioService.loginUsuario(correo, contrasena);
 
     if (usuario === null) {
